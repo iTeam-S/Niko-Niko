@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Groupe, Membre } from 'src/output';
 import { Repository } from 'typeorm';
-import { GroupeCreateDto } from './dto';
+import { GroupeCreateDto, GroupeUpdateDto } from './dto';
 
 @Injectable()
 export class GroupeService {
@@ -47,5 +47,16 @@ export class GroupeService {
         ])
         .innerJoin(Membre, "m", "m.id=g.membre_id")
         .getRawMany();
+    }
+
+    async update(donnees: GroupeUpdateDto): Promise<void> {
+        await this.groupeRepository
+        .createQueryBuilder()
+        .update(Groupe)
+        .set({
+            nom: donnees.nom
+        })
+        .where(`id=:identifiant`, { identifiant: donnees.id })
+        .execute();
     }
 }
