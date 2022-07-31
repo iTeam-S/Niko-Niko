@@ -7,8 +7,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Appartence } from "./Appartence";
 import { Membre } from "./Membre";
+import { Appartenance } from "./Appartenance";
 import { Humeur } from "./Humeur";
 
 @Index("fk_groupe_membre_id", ["membreId"], {})
@@ -30,15 +30,15 @@ export class Groupe {
   @Column("int", { name: "membre_id" })
   membreId: number;
 
-  @OneToMany(() => Appartence, (appartence) => appartence.groupe)
-  appartences: Appartence[];
-
   @ManyToOne(() => Membre, (membre) => membre.groupes, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
   })
   @JoinColumn([{ name: "membre_id", referencedColumnName: "id" }])
   membre: Membre;
+
+  @OneToMany(() => Appartenance, (appartenance) => appartenance.groupe)
+  appartenances: Appartenance[];
 
   @OneToMany(() => Humeur, (humeur) => humeur.groupe)
   humeurs: Humeur[];

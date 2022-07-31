@@ -5,8 +5,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Appartence } from "./Appartence";
 import { Groupe } from "./Groupe";
+import { Appartenance } from "./Appartenance";
 import { Humeur } from "./Humeur";
 
 @Index("prenom_usuel", ["prenomUsuel"], { unique: true })
@@ -93,15 +93,15 @@ export class Membre {
   @Column("enum", {
     name: "role",
     enum: ["admin", "user"],
-    default: () => "'user'",
+    default: ["user"],
   })
   role: "admin" | "user";
 
-  @OneToMany(() => Appartence, (appartence) => appartence.membre)
-  appartences: Appartence[];
-
   @OneToMany(() => Groupe, (groupe) => groupe.membre)
   groupes: Groupe[];
+
+  @OneToMany(() => Appartenance, (appartenance) => appartenance.membre)
+  appartenances: Appartenance[];
 
   @OneToMany(() => Humeur, (humeur) => humeur.membre)
   humeurs: Humeur[];

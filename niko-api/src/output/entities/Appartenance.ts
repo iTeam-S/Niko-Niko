@@ -9,10 +9,10 @@ import {
 import { Groupe } from "./Groupe";
 import { Membre } from "./Membre";
 
-@Index("fk_appartence_groupe_id", ["groupeId"], {})
-@Index("fk_appartence_membre_id", ["membreId"], {})
-@Entity("appartence", { schema: "NIKO" })
-export class Appartence {
+@Index("fk_appartenance_groupe_id", ["groupeId"], {})
+@Index("fk_appartenance_membre_id", ["membreId"], {})
+@Entity("appartenance", { schema: "NIKO" })
+export class Appartenance {
   @PrimaryGeneratedColumn({ type: "int", name: "id" })
   id: number;
 
@@ -22,14 +22,14 @@ export class Appartence {
   @Column("int", { name: "membre_id" })
   membreId: number;
 
-  @ManyToOne(() => Groupe, (groupe) => groupe.appartences, {
+  @ManyToOne(() => Groupe, (groupe) => groupe.appartenances, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
   })
   @JoinColumn([{ name: "groupe_id", referencedColumnName: "id" }])
   groupe: Groupe;
 
-  @ManyToOne(() => Membre, (membre) => membre.appartences, {
+  @ManyToOne(() => Membre, (membre) => membre.appartenances, {
     onDelete: "RESTRICT",
     onUpdate: "RESTRICT",
   })
