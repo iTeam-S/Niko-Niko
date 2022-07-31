@@ -1,4 +1,5 @@
-import { Body, Controller, NotAcceptableException, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, NotAcceptableException, 
+    Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GroupeCreateDto } from './dto';
 import { GroupeService } from './groupe.service';
@@ -14,5 +15,16 @@ export class GroupeController {
     async createGroupe(@Body() donnees: GroupeCreateDto, @Request() req: any) {
         if(!donnees) throw new NotAcceptableException('Credentials incorrects !');
         return await this.groupeService.create(parseInt(req.user.id), donnees);
+    }
+
+    @UseGuards(AuthGuard('jwtNiko'))
+    @Get()
+    async getGroupes(@Request() req: any) {
+        return await this.groupeService.find(parseInt(req.user.id));
+    }
+
+    @Get('admin/all')
+    async getAllGroupes() {
+        return await this.groupeService.findAll();
     }
 }
