@@ -22,7 +22,7 @@ export class AuthService {
     }
 
     async authentifier(donnees: AuthPostedDto): Promise<ResponseToken> {
-        const responseData = await this.authRepository
+        const reponse = await this.authRepository
             .createQueryBuilder("m")
             .select([
                 "m.id as id", 
@@ -35,9 +35,9 @@ export class AuthService {
                 password: donnees.password
             })
             .getRawOne();
-        if(!responseData) throw new UnauthorizedException("Credentials incorrects !");
+        if(!reponse) throw new UnauthorizedException("Credentials incorrects !");
         return {
-            access_token: await this.signAuth(responseData)
+            access_token: await this.signAuth(reponse)
         }
     }
 }

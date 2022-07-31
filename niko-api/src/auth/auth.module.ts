@@ -17,7 +17,8 @@ import { JwtStrategy } from './strategy';
       secret: process.env.JWT_SECRET
     })
   ],
-  providers: [AuthService],
-  controllers: [AuthController, JwtStrategy]
+  exports: [TypeOrmModule],
+  providers: [AuthService, JwtStrategy],
+  controllers: [AuthController]
 })
 export class AuthModule {}
