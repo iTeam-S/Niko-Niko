@@ -37,4 +37,8 @@ export class AppartenanceService {
         .where(`a.groupe_id=:identifiant`, { identifiant: groupe_id })
         .getRawMany();
     }
+
+    async remove(donnees: { id: number }): Promise<void> {
+        await this.appartenanceRepository.delete(donnees.id);
+    }
 }

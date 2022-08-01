@@ -1,4 +1,4 @@
-import { Body, Controller, Get, NotAcceptableException, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotAcceptableException, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AppartenanceService } from './appartenance.service';
 import { AppartenanceCreateDto } from './dto';
@@ -17,9 +17,16 @@ export class AppartenanceController {
     }
 
     @UseGuards(AuthGuard('jwtNiko'))
-    @Get(':id')
+    @Get('groupe/:id')
     async getAppartenance(@Param() groupe_id: number) {
         if(!groupe_id) throw new NotAcceptableException("Credentials incorrects !");
         return await this.appartenanceService.findByGroupe(groupe_id);
+    }
+
+    @UseGuards(AuthGuard('jwtNiko'))
+    @Delete('delete')
+    async removeAppartenance(@Body() donnees: { id: number }) {
+        if(!donnees) throw new NotAcceptableException("Credentials incorrects !");
+        return await this.appartenanceService.remove(donnees);
     }
 }
