@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -15,13 +16,17 @@ export class LogInComponent implements OnInit {
   errorMessage!: string;
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    if(this.authService.isLoggedIn()) this.router.navigateByUrl('/niko');
+
     this.inputTypePassword = "password";
     this.textShowPassword = "Afficher le mot de passe";
     this.unauthorized = false;
+    
     this.logInForm = this.formBuilder.group({
       identifiant: [null, Validators.required],
       password: [null, Validators.required]
