@@ -13,4 +13,7 @@ body {
     font-family: 'Source Sans Pro';
     box-sizing: border-box;
     background-color: white;
+    app-root {
+        height: 100vh !important;
+    }
 }

@@ -1,10 +1,11 @@
 <div class="logIn">
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-6">
-                <img src="assets/images/logIn.svg" class="img-fluid" alt="log in">
+        <div class="row p-1 justify-content-around align-items-center">
+            <div class="col-12 col-md-6 d-flex 
+                justify-content-center align-items-center">
+                <img src="assets/images/logIn.svg" class="img-fluid img_logIn" alt="log in">
             </div>
-            <form class="col-12 col-md-6 shadow cadreFormulaire" 
+            <form class="col-12 col-md-5 cadreFormulaire" 
                 [formGroup]="logInForm" (ngSubmit)="onSubmit()">
                 <div class="fs-3 fw-bold d-flex border my-md-4 my-3 p-1 rounded shadow
                     justify-content-around align-items-center salutation">
@@ -17,18 +18,19 @@
                     <img src="assets/images/logo.png" class="img-fluid" 
                         width="50" alt="logo iTeam-$">
                 </div>
-                <div class="text-muted my-3 d-flex 
+                <div class="sous_titre my-3 d-flex 
                     justify-content-center align-items-center">
-                    Comment s'était passé votre journée ?
+                    Alors, comment s'était passé votre journée ?
                     <span class="material-symbols-outlined">
                         mood
                     </span>
                 </div>
                 <div class="m-3 p-md-2"></div>
 
-                <div class="mx-md-3">
+                <div class="mx-md-3 formInput">
                     <div class="input-group mb-3">
-                        <span class="input-group-text fs-3 material-symbols-outlined">
+                        <span class="input-group-text fs-3 
+                            material-symbols-outlined icone">
                             account_circle
                         </span>
                         <div class="form-floating">
@@ -38,7 +40,8 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <span class="input-group-text fs-3 material-symbols-outlined">
+                        <span class="input-group-text fs-3 
+                            material-symbols-outlined icone">
                             key
                         </span>
                         <div class="form-floating">
@@ -54,7 +57,7 @@
                     <input class="form-check-input" type="checkbox" 
                         role="switch" id="showPassword"
                         (change)="onShowPassword($event)">
-                    <label class="form-check-label text-muted fw-bold" 
+                    <label class="form-check-label fw-bold sous_titre" 
                         for="showPassword">{{ textShowPassword }} ...</label>
                 </div>
                 <div *ngIf="unauthorized" class="text-danger fw-bold
@@ -65,7 +68,7 @@
                     <span class="mx-2">{{ errorMessage }}</span>
                 </div>
                 <div class="m-2 p-md-3 p-1"></div>
-                <div class="d-flex justify-content-center mb-3 mb-md-1">
+                <div class="d-flex justify-content-center mb-3">
                     <button class="btn fw-bold w-50 d-flex 
                         align-items-center justify-content-center buttonSubmit" 
                         type="submit" [disabled]="logInForm.invalid">Se connecter
