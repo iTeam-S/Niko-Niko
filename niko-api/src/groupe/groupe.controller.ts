@@ -39,8 +39,8 @@ export class GroupeController {
 
     @UseGuards(AuthGuard('jwtNiko'))
     @Delete('delete/:id')
-    async deleteGroupe(@Param() id: number) {
-        if(!id) throw new NotAcceptableException("Credentials incorrects !");
-        return await this.groupeService.remove(id);
+    async deleteGroupe(@Param() donnees: { id: number }) {
+        if(!donnees) throw new NotAcceptableException("Credentials incorrects !");
+        return await this.groupeService.remove(donnees);
     }
 }

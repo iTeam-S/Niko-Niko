@@ -18,14 +18,14 @@ export class AppartenanceController {
 
     @UseGuards(AuthGuard('jwtNiko'))
     @Get('groupe/:id')
-    async getAppartenance(@Param() groupe_id: number) {
-        if(!groupe_id) throw new NotAcceptableException("Credentials incorrects !");
-        return await this.appartenanceService.findByGroupe(groupe_id);
+    async getAppartenance(@Param() donnees: { id: number }) {
+        if(!donnees) throw new NotAcceptableException("Credentials incorrects !");
+        return await this.appartenanceService.findByGroupe(donnees);
     }
 
     @UseGuards(AuthGuard('jwtNiko'))
-    @Delete('delete')
-    async removeAppartenance(@Body() donnees: { id: number }) {
+    @Delete('delete/:id')
+    async removeAppartenance(@Param() donnees: { id: number }) {
         if(!donnees) throw new NotAcceptableException("Credentials incorrects !");
         return await this.appartenanceService.remove(donnees);
     }

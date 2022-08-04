@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { ModelGroupLists } from 'src/app/core/models/niko.model';
+import { ModelGroupLists, ModelMembreGroup } from 'src/app/core/models/niko.model';
 import { NikoService } from 'src/app/core/services/niko.service';
 declare var window: any;
 
@@ -16,7 +15,12 @@ export class CreateGroupeComponent implements OnInit {
   iconeToast!: any;
   titreToast!: string | null;
   messageToast!: string | null;
-  currentGroupe_id!: number | null;
+  currentGroupe!: ModelGroupLists | null;
+  membreGroupe!: ModelMembreGroup[];
+  iconeToastMembre!: any;
+  titreToastMembre!: string | null;
+  messageToastMembre!: string | null;
+  formUpdateGroup!: FormGroup;
 
   constructor(
     private nikoService: NikoService,
@@ -24,18 +28,21 @@ export class CreateGroupeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.currentGroupe_id = null;
+    this.currentGroupe = null;
     this.nikoService.getListsOfGroups().subscribe({
       next: (response) => this.listsGroups = response
     });
     this.formCreateGroup = this.formBuilder.group({
       nom: [null, Validators.required]
     });
+    this.formUpdateGroup = this.formBuilder.group({
+      nom: [null, Validators.required]
+    });
   }
 
   onCreateGroup(): void {
     let toast = new window.bootstrap
-      .Toast(document.getElementById('liveToastFormations'));
+      .Toast(document.getElementById('liveToastNotification'));
     this.nikoService.createGroup(this.formCreateGroup.value)
       .subscribe({
         next: () => {
@@ -63,24 +70,24 @@ export class CreateGroupeComponent implements OnInit {
       });
   }
 
-  onGetIdGroupe(data: ModelGroupLists): void {
-    this.currentGroupe_id = data.id;
+  onGetDataGroup(data: ModelGroupLists): void {
+    this.currentGroupe = data;
   }
 
   onCancelGroupe(): void {
-    this.currentGroupe_id = null;
+    this.currentGroupe = null;
   }
 
   onRemoveGroupe(): void {
     let toast = new window.bootstrap
-      .Toast(document.getElementById('liveToastFormations'));
-    this.nikoService.removeGroupe(this.currentGroupe_id).subscribe({
+      .Toast(document.getElementById('liveToastNotification'));
+    this.nikoService.removeGroupe(this.currentGroupe?.id).subscribe({
       next: () => {
         this.iconeToast = "check_circle";
         this.titreToast = "Groupe";
         this.messageToast = "Supprimer avec succès !"
         toast.show();
-        this.currentGroupe_id = null;
+        this.currentGroupe = null;
         this.nikoService.getListsOfGroups().subscribe({
           next: (response) => this.listsGroups = response
         });
@@ -97,7 +104,85 @@ export class CreateGroupeComponent implements OnInit {
           this.messageToast = res.error.message
         }
         toast.show();
-        this.currentGroupe_id = null
+        this.currentGroupe = null
+      }
+    });
+  }
+
+  onloadData(data: ModelGroupLists): void {
+    this.currentGroupe = data;
+    this.formUpdateGroup = this.formBuilder.group({
+      nom: [this.currentGroupe.nom_groupe, Validators.required]
+    });
+    this.nikoService.getMembreGroupe(this.currentGroupe?.id).subscribe({
+      next: (response) => this.membreGroupe = response
+    });
+  }
+
+  onRemoveMembre(data: ModelMembreGroup): void {
+    let toast = new window.bootstrap
+    .Toast(document.getElementById('liveToastNotificationMembre'));
+    this.nikoService.removeMembreGroupe(data.id).subscribe({
+      next: () => {
+        this.iconeToastMembre = "check_circle";
+        this.titreToastMembre = "Membre";
+        this.messageToastMembre = "Supprimer avec succès !"
+        toast.show();
+        this.nikoService.getMembreGroupe(this.currentGroupe?.id).subscribe({
+          next: (response) => this.membreGroupe = response
+        });
+      },
+      error: (res) => {
+        if(res.status === 406) {
+          this.iconeToastMembre = "warning";
+          this.titreToastMembre = "Erreur";
+          this.messageToastMembre = "Veuillez respecter le type de données..."
+        }
+        else {
+          this.iconeToastMembre = "error";
+          this.titreToastMembre = "Erreur";
+          this.messageToastMembre = res.error.message
+        }
+        toast.show();
+      }
+    });
+  }
+
+  onUpdateGroup(): void {
+    const donnees = { 
+      id: this.currentGroupe?.id, 
+      ...this.formUpdateGroup.value 
+    };
+    let toast = new window.bootstrap
+    .Toast(document.getElementById('liveToastNotificationMembre'));
+    this.nikoService.updateGroupe(donnees).subscribe({
+      next: () => {
+        this.iconeToastMembre = "check_circle";
+        this.titreToastMembre = "Nom du groupe";
+        this.messageToastMembre = "Modifié avec succès !"
+        toast.show();
+        this.nikoService.getListsOfGroups().subscribe({
+          next: (response) => {
+            this.listsGroups = response
+            this.listsGroups.filter((resultats) => {
+              if(resultats.id === this.currentGroupe?.id) 
+                this.currentGroupe = resultats;
+            })
+          }
+        });
+      },
+      error: (res) => {
+        if(res.status === 406) {
+          this.iconeToastMembre = "warning";
+          this.titreToastMembre = "Erreur";
+          this.messageToastMembre = "Veuillez respecter le type de données..."
+        }
+        else {
+          this.iconeToastMembre = "error";
+          this.titreToastMembre = "Erreur";
+          this.messageToastMembre = res.error.message
+        }
+        toast.show();
       }
     });
   }

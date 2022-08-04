@@ -63,14 +63,14 @@ export class GroupeService {
         .execute();
     }
 
-    async remove(id: number): Promise<void> {
+    async remove(donnees: { id: number }): Promise<void> {
         await this.appartenanceRepository
         .createQueryBuilder()
         .delete()
         .from(Appartenance)
         .where('groupe_id=:identifiant',  
-            { identifiant: id })
+            { identifiant: donnees.id })
         .execute();
-        await this.groupeRepository.delete(id);
+        await this.groupeRepository.delete(donnees.id);
     }
 }

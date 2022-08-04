@@ -24,7 +24,7 @@ export class AppartenanceService {
         .execute();
     }
 
-    async findByGroupe(groupe_id: number): Promise<Appartenance[]> {
+    async findByGroupe(donnees: { id: number }): Promise<Appartenance[]> {
         return await this.appartenanceRepository
         .createQueryBuilder("a")
         .select([
@@ -34,7 +34,7 @@ export class AppartenanceService {
         ])
         .innerJoin(Groupe, "g", "g.id=a.groupe_id")
         .innerJoin(Membre, "m", "m.id=a.membre_id")
-        .where(`a.groupe_id=:identifiant`, { identifiant: groupe_id })
+        .where(`a.groupe_id=:identifiant`, { identifiant: donnees.id })
         .getRawMany();
     }
 
