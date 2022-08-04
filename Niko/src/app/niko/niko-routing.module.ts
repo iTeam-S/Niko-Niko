@@ -9,8 +9,8 @@ const routes: Routes = [
   { path: '', component: BodyComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'groupe', component: GroupeComponent },
-      { path: 'create-groupe', component: CreateGroupeComponent },
+      { path: 'group', component: GroupeComponent },
+      { path: 'settings', component: CreateGroupeComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   }

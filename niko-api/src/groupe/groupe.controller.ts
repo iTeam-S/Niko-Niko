@@ -1,6 +1,6 @@
-import { Body, Controller, Get, NotAcceptableException, 
-    Patch, 
-    Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotAcceptableException, 
+    Param, 
+    Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GroupeCreateDto, GroupeUpdateDto } from './dto';
 import { GroupeService } from './groupe.service';
@@ -35,5 +35,12 @@ export class GroupeController {
     async updateGroupe(@Body() donnees: GroupeUpdateDto, @Request() req: any) {
         if(!donnees) throw new NotAcceptableException('Credentials incorrects !');
         return await this.groupeService.update(donnees);
+    }
+
+    @UseGuards(AuthGuard('jwtNiko'))
+    @Delete('delete/:id')
+    async deleteGroupe(@Param() id: number) {
+        if(!id) throw new NotAcceptableException("Credentials incorrects !");
+        return await this.groupeService.remove(id);
     }
 }

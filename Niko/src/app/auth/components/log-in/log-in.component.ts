@@ -48,6 +48,7 @@ export class LogInComponent implements OnInit {
     this.authService.logIn(this.logInForm.value).subscribe({
       next: response => {
         this.authService.setToken(response.body.access_token);
+        this.router.navigateByUrl('/niko')
       },
       error: response => {
         if(response.status === 401) {

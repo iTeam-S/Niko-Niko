@@ -1,0 +1,45 @@
+.titre_param {
+    color: rgba(15, 26, 58, 0.938);
+}
+
+.boutton_creer {
+    position: absolute;
+    position: fixed;
+    z-index: 100;
+    right: .1%;
+    bottom: 5%;
+    transform: translate(1%, -20%);
+    box-shadow: 0 .5rem .5rem rgba(0,0,0,.15);
+    transition: all .5s ease;
+    background-color: rgba($color: #008080, $alpha: .7);
+    span {
+        color: rgba(15, 26, 58, 0.938);
+    }
+    &:hover {
+        transition: all .5s ease;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .text_boutton_creer {
+        display: none;
+    }
+    .boutton_creer {
+        transform: translate(1%, -60%);
+        right: 1%;
+    }
+}
+
+.group_list {
+    height: 100vh;
+    overflow: auto;
+    li {
+        box-shadow: 0 1px 3px rgba(0,0,0,.10);
+    }
+}
+
+#modalCreateGroup {
+    label {
+        color: #008080;
+    }
+}

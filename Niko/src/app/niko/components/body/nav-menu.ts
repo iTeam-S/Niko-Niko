@@ -6,12 +6,12 @@ export const navbar = [
     },
     {
         label: "groupes",
-        icon: "group",
-        route: "/niko/groupe"
+        icon: "groups",
+        route: "/niko/group"
     },
     {
         label: "paramètres",
         icon: "manage_accounts",
-        route: "/niko/create-groupe"
+        route: "/niko/settings"
     }
 ];

@@ -1,1 +1,142 @@
+<div class="container" style="background-color: white;">
+    <div class="row p-1">
+        <div class="col-12 mt-3 d-flex 
+            justify-content-center param_section">
+            <span class="fs-4 fw-bold titre_param">
+                Listes des groupes créés:
+            </span>
+            <div class="btn rounded-pill border border-2 boutton_creer 
+                d-flex justify-content-center align-items-center"
+                data-bs-toggle="modal" data-bs-target="#modalCreateGroup" 
+                data-bs-whatever="@getbootstrap">
+                <span class="material-symbols-outlined fs-4">
+                    group_add
+                </span>
+                <span class="ms-1 fw-bold text_boutton_creer">Ajouter</span>
+            </div>
+        </div>
+        <div class="col-12 mt-3 group_list">
+            <ul class="list-group container-fluid" 
+                style="padding: 0;" *ngIf="listsGroups">
+                <li class="list-group-item
+                    row my-1 border rounded
+                    d-flex justify-content-between" 
+                    *ngFor="let data of listsGroups">
+                    <div class="col-4 d-flex flex-column 
+                        align-items-start">
+                        <span class="material-symbols-outlined">
+                            group
+                        </span>
+                        <span class="ms-1 fw-bold" 
+                            style="color: #008080;">{{ data.nom_groupe | titlecase }}</span>
+                    </div>
+                    <div class="col-4 d-flex flex-column 
+                        justify-content-center align-items-center">
+                        <span class="material-symbols-outlined" 
+                            style="color: rgba(15, 26, 58, 0.767)">
+                            calendar_month
+                        </span>
+                        <span 
+                            style="color: rgba(15, 26, 58, 0.623) !important;">
+                            {{ data.created_at | date: 'dd-MM-y à HH:mm:ss' }}</span>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end align-items-center">
+                        <button class="btn btn-outline-primary p-1 mx-1">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </button>
+                        <button class="btn btn-outline-warning p-1 mx-1"
+                            data-bs-toggle="modal" data-bs-target="#modalRemoveGroup" 
+                            data-bs-whatever="@getbootstrap"
+                            (click)="onGetIdGroupe(data)">
+                            <span class="material-symbols-outlined">
+                                group_remove
+                            </span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
+<!-- ============================= MODAL POUR CRÉER GROUPE ========================= -->
+<div class="modal fade" id="modalCreateGroup" tabindex="-1" data-bs-backdrop="static"
+    aria-labelledby="modalCreateGroupLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" 
+            id="modalCreateGroupLabel">Créer un groupe</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" 
+            aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formCreateGroup">
+            <div class="input-group mb-3">
+                <span class="input-group-text fs-3 
+                    material-symbols-outlined icone">
+                    group
+                </span>
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="nom_groupe" 
+                    placeholder="Nom du groupe" formControlName="nom">
+                  <label class="fw-bold" for="nom_groupe">Nom du groupe:</label>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success fw-bold" 
+            data-bs-dismiss="modal" [disabled]="formCreateGroup.invalid"
+            (click)="onCreateGroup()">Créer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= MODAL POUR SUPPRIMER GROUPE ========================= -->
+<div class="modal fade" id="modalRemoveGroup" tabindex="-1" data-bs-backdrop="static"
+    aria-labelledby="modalRemoveGroupLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-warning d-flex 
+        justify-content-center align-items-center">
+        <span class="material-symbols-outlined fw-bold">
+            warning
+        </span>
+        <span class="ms-1 fw-bold">Voulez-vous supprimer le groupe ?</span>
+      </div>
+      <div class="d-flex justify-content-center my-1">
+        <button type="button" class="btn fw-bold" 
+            data-bs-dismiss="modal"
+            (click)="onCancelGroupe()">Non</button>
+        <button type="button" class="btn text-warning fw-bold" 
+            data-bs-dismiss="modal"
+            (click)="onRemoveGroupe()">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== NOTIFICATION ========================== -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToastFormations" class="toast" role="alert" 
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-header" 
+            [style.color]="titreToast !== 'Erreur' ? '#19873f' : '#dc3545'">
+            <strong class="me-auto d-flex align-items-center"> 
+                <span class="material-symbols-outlined">
+                    {{ iconeToast }}
+                </span>
+                <span class="ms-1">{{ titreToast }}</span>
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" 
+                aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-center" 
+            [style.color]="titreToast !== 'Erreur' ? '#19873f' : '#dc3545'">
+            {{ messageToast }}</div>
+    </div>
+</div>
