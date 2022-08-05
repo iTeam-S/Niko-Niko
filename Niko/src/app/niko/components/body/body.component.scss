@@ -29,13 +29,15 @@ header {
 
 .switchButtons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     .btn {
         display: flex !important;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         border: 2px solid transparent;
-        transition: all .5s;  
+        transition: all .5s;
+        padding: 0 !important;
         span {
             color:rgba(15, 26, 58, 0.938);
         }
@@ -52,9 +54,7 @@ header {
 }
 
 .active_menu {
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
     background-color: rgba($color: #008080, $alpha: .4) !important;
-    transform: translate(2%, -2%) !important;
     span {
         color: #ffffff !important;
     }

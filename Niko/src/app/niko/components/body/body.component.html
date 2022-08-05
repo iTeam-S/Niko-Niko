@@ -17,7 +17,8 @@
             </div>
             <div class="col-md-3 col-2 d-flex justify-content-end">
                 <button class="btn rounded-pill shadow border border-2
-                    d-flex justify-content-center align-items-center deconnection">
+                    d-flex justify-content-center align-items-center deconnection"
+                    (click)="onlogOut()">
                     <span class="material-symbols-outlined fw-bold">
                         power_rounded
                     </span>
@@ -25,15 +26,16 @@
                 </button>
             </div>
         </div>
-        <div class="row rounded mt-3 mb-1 switchButtons">
-            <div class="col-4" *ngFor="let data of navMenu">
-                <div class="btn fs-5" [routerLink]="data.route" 
+        <div class="row rounded pt-1 mt-1 mb-1 switchButtons">
+            <div class="col-3" *ngFor="let data of navMenu">
+                <div class="btn" 
+                    [routerLink]="data.route" 
                     routerLinkActive="active_menu"
                     [routerLinkActiveOptions]="{exact: true}">
-                    <span class="material-symbols-outlined fs-3">
+                    <span class="material-symbols-outlined">
                         {{ data.icon }}
                     </span>
-                    <span class="fw-bold ms-1 
+                    <span class="fw-bold
                         menu_label">{{ data.label | titlecase }}</span>
                 </div>
             </div>

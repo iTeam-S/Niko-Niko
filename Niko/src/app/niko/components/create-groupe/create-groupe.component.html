@@ -171,6 +171,28 @@
                     </span>
                   </button>
                 </form>
+                <form class="d-flex align-items-center" 
+                  [formGroup]="formMembreCheckbox"
+                  (ngSubmit)="onAddMembre()">
+                  <div class="liste_inserte_groupe w-100 mx-2">
+                    <ul class="list-group">
+                      <li class="list-group-item" *ngFor="let membre of membreCheckbox">
+                        <input class="form-check-input me-1" 
+                          type="checkbox" [value]="membre.id"
+                          [id]="membre.prenom_usuel" 
+                            formArrayName="membre_list"
+                            (change)="onChangeCheckbox($event)">
+                        <label class="form-check-label stretched-link" 
+                          [for]="membre.prenom_usuel">{{ membre.prenom_usuel }}</label>
+                      </li>
+                    </ul>
+                  </div>
+                  <button class="btn border-bottom">
+                    <span class="material-symbols-outlined">
+                      person_add
+                    </span>
+                  </button>
+                </form>
               </div>
             </div>
           </div>

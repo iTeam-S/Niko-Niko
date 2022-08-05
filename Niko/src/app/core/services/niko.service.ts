@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { ModelGroupLists, ModelMembreGroup } from "../models/niko.model";
+import { ModelAllMembre, ModelCreateMembre, ModelGroupLists, ModelMembreGroup } from "../models/niko.model";
 
 @Injectable({
     providedIn: 'root'
@@ -33,6 +33,11 @@ export class NikoService {
     }
 
     // ========================= MEMBRES OF GROUPES =============================
+    createMembreGroupe(donnees: ModelCreateMembre): Observable<any> {
+        return this.http.post(environment.baseUrl + '/appartenance/create', donnees, 
+            { observe: 'response' });
+    }
+
     getMembreGroupe(id: number | undefined): Observable<ModelMembreGroup[]> {
         return this.http.get<ModelMembreGroup[]>(environment.baseUrl + 
             `/appartenance/groupe/${ id }`);
@@ -41,5 +46,10 @@ export class NikoService {
     removeMembreGroupe(id: number): Observable<any> {
         return this.http.delete(environment.baseUrl + `/appartenance/delete/${ id }`,
             { observe: 'response' });
+    }
+
+    // ========================== ALL MEMBRES =====================================
+    getAllMembre(): Observable<ModelAllMembre[]> {
+        return this.http.get<ModelAllMembre[]>(environment.baseUrl + '/membre');
     }
 }

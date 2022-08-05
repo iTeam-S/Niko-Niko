@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModelGroupLists, ModelMembreGroup } from 'src/app/core/models/niko.model';
+import { FormArray, FormArrayName, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModelAllMembre, ModelGroupLists, ModelMembreGroup } from 'src/app/core/models/niko.model';
 import { NikoService } from 'src/app/core/services/niko.service';
 declare var window: any;
 
@@ -21,6 +21,10 @@ export class CreateGroupeComponent implements OnInit {
   titreToastMembre!: string | null;
   messageToastMembre!: string | null;
   formUpdateGroup!: FormGroup;
+  membreAll!: ModelAllMembre[];
+  membreCheckbox!: ModelAllMembre[] | null;
+  currentsPrenoms!: string[];
+  formMembreCheckbox!: FormGroup;
 
   constructor(
     private nikoService: NikoService,
@@ -32,11 +36,17 @@ export class CreateGroupeComponent implements OnInit {
     this.nikoService.getListsOfGroups().subscribe({
       next: (response) => this.listsGroups = response
     });
+    this.nikoService.getAllMembre().subscribe({
+      next: (response) => this.membreAll = response
+    });
     this.formCreateGroup = this.formBuilder.group({
       nom: [null, Validators.required]
     });
     this.formUpdateGroup = this.formBuilder.group({
       nom: [null, Validators.required]
+    });
+    this.formMembreCheckbox = this.formBuilder.group({
+      membre_list: new FormArray([])
     });
   }
 
@@ -76,6 +86,10 @@ export class CreateGroupeComponent implements OnInit {
 
   onCancelGroupe(): void {
     this.currentGroupe = null;
+    this.membreCheckbox = null;
+    this.formMembreCheckbox = this.formBuilder.group({
+      membre_list: new FormArray([])
+    });
   }
 
   onRemoveGroupe(): void {
@@ -115,7 +129,13 @@ export class CreateGroupeComponent implements OnInit {
       nom: [this.currentGroupe.nom_groupe, Validators.required]
     });
     this.nikoService.getMembreGroupe(this.currentGroupe?.id).subscribe({
-      next: (response) => this.membreGroupe = response
+      next: (response) => {
+        this.membreGroupe = response;
+        this.currentsPrenoms = this.membreGroupe
+          .map(value => value.prenom_usuel.trim());
+        this.membreCheckbox = this.membreAll.filter((membre) => !this.currentsPrenoms
+          .includes(membre.prenom_usuel));
+      }
     });
   }
 
@@ -169,6 +189,51 @@ export class CreateGroupeComponent implements OnInit {
                 this.currentGroupe = resultats;
             })
           }
+        });
+      },
+      error: (res) => {
+        if(res.status === 406) {
+          this.iconeToastMembre = "warning";
+          this.titreToastMembre = "Erreur";
+          this.messageToastMembre = "Veuillez respecter le type de données..."
+        }
+        else {
+          this.iconeToastMembre = "error";
+          this.titreToastMembre = "Erreur";
+          this.messageToastMembre = res.error.message
+        }
+        toast.show();
+      }
+    });
+  }
+
+  onChangeCheckbox(event: any) {
+    const selectMembre = (this.formMembreCheckbox.controls['membre_list'] as FormArray);
+    if(event.target.checked) {
+      selectMembre.push(new FormControl(event.target.value));
+    }
+    else {
+      const index = selectMembre.controls
+        .findIndex(item => item.value === event.target.value);
+        selectMembre.removeAt(index);
+    }
+  }
+
+  onAddMembre(): void {
+    const donnees = {
+      groupe_id: this.currentGroupe?.id, 
+      ...this.formMembreCheckbox.value
+    };
+    let toast = new window.bootstrap
+      .Toast(document.getElementById('liveToastNotificationMembre'));
+    this.nikoService.createMembreGroupe(donnees).subscribe({
+      next: () => {
+        this.iconeToastMembre = "check_circle";
+        this.titreToastMembre = "Membres";
+        this.messageToastMembre = "Ajoutés avec succès !"
+        toast.show();
+        this.nikoService.getMembreGroupe(this.currentGroupe?.id).subscribe({
+          next: (response) => this.membreGroupe = response
         });
       },
       error: (res) => {
