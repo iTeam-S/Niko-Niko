@@ -58,6 +58,10 @@ input[type="checkbox"] {
    .logIn {
     margin-top: 2% !important;
    }
+   
+   .logIn::before {
+    top: -11px !important;
+   }
 }
 
 .logIn::before {

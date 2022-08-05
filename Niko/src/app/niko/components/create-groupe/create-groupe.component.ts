@@ -149,7 +149,13 @@ export class CreateGroupeComponent implements OnInit {
         this.messageToastMembre = "Supprimer avec succès !"
         toast.show();
         this.nikoService.getMembreGroupe(this.currentGroupe?.id).subscribe({
-          next: (response) => this.membreGroupe = response
+          next: (response) => {
+            this.membreGroupe = response;
+            this.currentsPrenoms = this.membreGroupe
+              .map(value => value.prenom_usuel.trim());
+            this.membreCheckbox = this.membreAll.filter((membre) => !this.currentsPrenoms
+              .includes(membre.prenom_usuel));
+          }
         });
       },
       error: (res) => {
@@ -233,7 +239,13 @@ export class CreateGroupeComponent implements OnInit {
         this.messageToastMembre = "Ajoutés avec succès !"
         toast.show();
         this.nikoService.getMembreGroupe(this.currentGroupe?.id).subscribe({
-          next: (response) => this.membreGroupe = response
+          next: (response) => {
+            this.membreGroupe = response;
+            this.currentsPrenoms = this.membreGroupe
+              .map(value => value.prenom_usuel.trim());
+            this.membreCheckbox = this.membreAll.filter((membre) => !this.currentsPrenoms
+              .includes(membre.prenom_usuel));
+          }
         });
       },
       error: (res) => {

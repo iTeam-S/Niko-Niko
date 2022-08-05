@@ -48,7 +48,7 @@ export class LogInComponent implements OnInit {
     this.authService.logIn(this.logInForm.value).subscribe({
       next: response => {
         this.authService.setToken(response.body.access_token);
-        this.router.navigateByUrl('/niko')
+        this.router.navigateByUrl('/niko');
       },
       error: response => {
         if(response.status === 401) {
@@ -61,7 +61,7 @@ export class LogInComponent implements OnInit {
         }
         else {
           this.unauthorized = true;
-          this.errorMessage = "Une erreur s'est produit..."
+          this.errorMessage = "Une erreur s'est produit...";
         }
       }
     });
