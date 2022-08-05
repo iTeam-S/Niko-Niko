@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://0.0.0.0:3131'
+  baseUrl: 'https://api-niko.iteam-s.mg'
 };
