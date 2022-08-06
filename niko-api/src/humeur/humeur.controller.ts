@@ -1,8 +1,10 @@
 import { Body, Controller, NotAcceptableException, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { HumeurCreateDto } from './dto';
 import { HumeurService } from './humeur.service';
 
+@ApiBearerAuth()
 @Controller('humeur')
 export class HumeurController {
     constructor(

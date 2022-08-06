@@ -1,3 +1,5 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class ResponseToSign {
     id: number;
     prenom_usuel: string;
@@ -9,6 +11,9 @@ export class ResponseToken {
 }
 
 export class AuthPostedDto {
+    @ApiProperty()
     identifiant!: string;
+
+    @ApiProperty()
     password!: string;
 }

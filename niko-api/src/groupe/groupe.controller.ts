@@ -2,9 +2,11 @@ import { Body, Controller, Delete, Get, NotAcceptableException,
     Param, 
     Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { GroupeCreateDto, GroupeUpdateDto } from './dto';
 import { GroupeService } from './groupe.service';
 
+@ApiBearerAuth()
 @Controller('groupe')
 export class GroupeController {
     constructor(

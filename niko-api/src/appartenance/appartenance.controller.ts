@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, NotAcceptableException, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { AppartenanceService } from './appartenance.service';
 import { AppartenanceCreateDto } from './dto';
 
+@ApiBearerAuth()
 @Controller('appartenance')
 export class AppartenanceController {
     constructor(

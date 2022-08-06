@@ -1,7 +1,9 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { MembreService } from './membre.service';
 
+@ApiBearerAuth()
 @Controller('membre')
 export class MembreController {
     constructor(
