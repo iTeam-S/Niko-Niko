@@ -1,0 +1,79 @@
+header {
+    background-color: #40a0a0 !important;
+    z-index: 10;
+}
+
+.cadreSearch {
+    .iconSearch {
+        position: absolute;
+        transform: translate(50%, 30%);
+        color: #008080 !important;
+    }
+    input {
+        width: 80%;
+    }
+
+    input::placeholder {
+        opacity: .4;
+    }
+}
+
+.deconnection {
+    color: rgba(15, 26, 58, 0.938);
+    transition: all .4s;
+    &:hover {
+        background-color: rgba($color: #ffffff, $alpha: 1.0);
+        color: #008080;
+    }
+}
+
+.switchButtons {
+    display: flex;
+    justify-content: space-around;
+    .btn {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid transparent;
+        transition: all .5s;
+        padding: 0 !important;
+        span {
+            color:rgba(15, 26, 58, 0.938);
+        }
+        &:hover {
+            transition: all .5s;    
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            background-color: rgba($color: #008080, $alpha: .85);
+            transform: translate(2%, -2%);
+            span {
+                color: #ffffff !important;
+            }
+        }
+    }
+}
+
+.active_menu {
+    background-color: rgba($color: #008080, $alpha: .4) !important;
+    span {
+        color: #ffffff !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .deconnection {
+        .textDeconnection {
+            display: none;
+        }
+    }
+
+    .cadreSearch {
+        input {
+            width: 100%;
+        }
+    }
+
+    .menu_label {
+        display: none !important;
+    }
+}

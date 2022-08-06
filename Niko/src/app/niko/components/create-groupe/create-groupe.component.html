@@ -1,0 +1,269 @@
+<div class="container" style="background-color: white;">
+    <div class="row p-1">
+        <div class="col-12 mt-3 d-flex 
+            justify-content-center param_section">
+            <span class="fs-4 fw-bold titre_param">
+                Listes des groupes créés:
+            </span>
+            <div class="btn rounded-pill border border-2 boutton_creer 
+                d-flex justify-content-center align-items-center"
+                data-bs-toggle="modal" data-bs-target="#modalCreateGroup" 
+                data-bs-whatever="@getbootstrap">
+                <span class="material-symbols-outlined fs-4">
+                    group_add
+                </span>
+                <span class="ms-1 fw-bold text_boutton_creer">Ajouter</span>
+            </div>
+        </div>
+        <div class="col-12 mt-3 group_list">
+            <ul class="list-group container-fluid" 
+                style="padding: 0;" *ngIf="listsGroups">
+                <li class="list-group-item list-group-item-action
+                    row my-1 mx-0 border rounded
+                    d-flex justify-content-between" 
+                    *ngFor="let data of listsGroups">
+                    <div class="col-4 d-flex flex-column 
+                        align-items-start">
+                        <span class="material-symbols-outlined">
+                            group
+                        </span>
+                        <span class="ms-1 fw-bold" 
+                            style="color: #008080;">{{ data.nom_groupe | titlecase }}</span>
+                    </div>
+                    <div class="col-4 d-flex flex-column 
+                        justify-content-center align-items-center">
+                        <span class="material-symbols-outlined" 
+                            style="color: rgba(15, 26, 58, 0.767)">
+                            calendar_month
+                        </span>
+                        <span 
+                            style="color: rgba(15, 26, 58, 0.623) !important;">
+                            {{ data.created_at | date: 'dd-MM-y à HH:mm:ss' }}</span>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end align-items-center">
+                        <button class="btn border-bottom p-1 mx-1"
+                            data-bs-toggle="modal" data-bs-target="#modalUpdateGroup" 
+                            data-bs-whatever="@getbootstrap"
+                            (click)="onloadData(data)">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </button>
+                        <button class="btn border-bottom p-1 mx-1"
+                            data-bs-toggle="modal" data-bs-target="#modalRemoveGroup" 
+                            data-bs-whatever="@getbootstrap"
+                            (click)="onGetDataGroup(data)">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ============================= MODAL POUR CRÉER GROUPE ========================= -->
+<div class="modal fade" id="modalCreateGroup" tabindex="-1" data-bs-backdrop="static"
+    aria-labelledby="modalCreateGroupLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" 
+            id="modalCreateGroupLabel">Créer un groupe</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" 
+            aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formCreateGroup">
+            <div class="input-group mb-3">
+                <span class="input-group-text fs-3 
+                    material-symbols-outlined icone">
+                    group
+                </span>
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="nom_groupe" 
+                    placeholder="Nom du groupe" formControlName="nom">
+                  <label class="fw-bold" for="nom_groupe">Nom du groupe:</label>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success fw-bold" 
+            data-bs-dismiss="modal" [disabled]="formCreateGroup.invalid"
+            (click)="onCreateGroup()">Créer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= MODAL POUR MODIFIER GROUPE ========================= -->
+<div class="modal fade" id="modalUpdateGroup" tabindex="-1" data-bs-backdrop="static"
+    aria-labelledby="modalUpdateGroupLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold d-flex 
+          justify-content-center align-items-center" 
+            id="modalUpdateGroupLabel">
+            <span class="material-symbols-outlined">
+              edit
+            </span>
+            <span class="mx-1">Modifier le groupe</span>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" 
+            aria-label="Close"
+            (click)="onCancelGroupe()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid" style="padding: 0;">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="mx-1 border rounded">
+                <div class="fw-bold text-center border-bottom nom_groupe_modal
+                  rounded py-2">{{ currentGroupe?.nom_groupe | titlecase }}</div>
+                <div class="liste_membre">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex fw-bold
+                      align-items-center">
+                      <span class="material-symbols-outlined">
+                        admin_panel_settings
+                      </span>
+                      <span class="mx-2">{{ currentGroupe?.prenom_usuel }}</span>
+                    </li>
+                    <li class="list-group-item d-flex
+                      justify-content-between align-items-center"
+                      *ngFor="let membre of membreGroupe">
+                      <span>{{ membre?.prenom_usuel }}</span>
+                      <button class="btn border-bottom py-0"
+                        (click)="onRemoveMembre(membre)">
+                        <span class="material-symbols-outlined">
+                          person_remove
+                        </span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div class="mx-1 p-2 p-md-0 modification_groupe_membre">
+                <form class="d-flex align-items-center 
+                  justify-content-center" [formGroup]="formUpdateGroup" 
+                    (ngSubmit)="onUpdateGroup()">
+                  <div class="input-group mb-3 mt-2 mx-2">
+                      <span class="input-group-text fs-3
+                          material-symbols-outlined icone">
+                          group
+                      </span>
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="nom_groupe" 
+                          placeholder="Nom du groupe" formControlName="nom">
+                        <label class="fw-bold" for="nom_groupe">Nom du groupe:</label>
+                      </div>
+                  </div>
+                  <button class="btn border-bottom rounded pb-0 pt-1"
+                    [disabled]="formUpdateGroup.invalid">
+                    <span class="material-symbols-outlined">
+                      task_alt
+                    </span>
+                  </button>
+                </form>
+                <form class="d-flex align-items-center" 
+                  [formGroup]="formMembreCheckbox"
+                  (ngSubmit)="onAddMembre()">
+                  <div class="liste_inserte_groupe w-100 mx-2">
+                    <ul class="list-group">
+                      <li class="list-group-item" *ngFor="let membre of membreCheckbox">
+                        <input class="form-check-input me-1" 
+                          type="checkbox" [value]="membre.id"
+                          [id]="membre.prenom_usuel" 
+                            formArrayName="membre_list"
+                            (change)="onChangeCheckbox($event)">
+                        <label class="form-check-label stretched-link" 
+                          [for]="membre.prenom_usuel">{{ membre.prenom_usuel }}</label>
+                      </li>
+                    </ul>
+                  </div>
+                  <button class="btn border-bottom">
+                    <span class="material-symbols-outlined">
+                      person_add
+                    </span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- =========================== NOTIFICATION MEMBRE ========================= -->
+      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToastNotificationMembre" class="toast" role="alert" 
+            aria-live="assertive" aria-atomic="true">
+            <div class="toast-header" 
+                [style.color]="titreToastMembre !== 'Erreur' ? '#19873f' : '#dc3545'">
+                <strong class="me-auto d-flex align-items-center"> 
+                    <span class="material-symbols-outlined">
+                        {{ iconeToastMembre }}
+                    </span>
+                    <span class="ms-1">{{ titreToastMembre }}</span>
+                </strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" 
+                    aria-label="Close"></button>
+            </div>
+            <div class="toast-body text-center" 
+                [style.color]="titreToastMembre !== 'Erreur' ? '#19873f' : '#dc3545'">
+                {{ messageToastMembre }}</div>
+        </div>
+      </div>
+      <!-- =========================================================================== -->
+    </div>
+  </div>
+</div>
+
+<!-- ============================= MODAL POUR SUPPRIMER GROUPE ========================= -->
+<div class="modal fade" id="modalRemoveGroup" tabindex="-1" data-bs-backdrop="static"
+    aria-labelledby="modalRemoveGroupLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-warning d-flex 
+        justify-content-center align-items-center">
+        <span class="material-symbols-outlined fw-bold">
+            warning
+        </span>
+        <span class="ms-1 fw-bold">Souhaitez-vous supprimer ce groupe ?</span>
+      </div>
+      <div class="d-flex justify-content-center my-1">
+        <button type="button" class="btn fw-bold" 
+            data-bs-dismiss="modal"
+            (click)="onCancelGroupe()">Non</button>
+        <button type="button" class="btn text-warning fw-bold" 
+            data-bs-dismiss="modal"
+            (click)="onRemoveGroupe()">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== NOTIFICATION ========================== -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToastNotification" class="toast" role="alert" 
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-header" 
+            [style.color]="titreToast !== 'Erreur' ? '#19873f' : '#dc3545'">
+            <strong class="me-auto d-flex align-items-center"> 
+                <span class="material-symbols-outlined">
+                    {{ iconeToast }}
+                </span>
+                <span class="ms-1">{{ titreToast }}</span>
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" 
+                aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-center" 
+            [style.color]="titreToast !== 'Erreur' ? '#19873f' : '#dc3545'">
+            {{ messageToast }}</div>
+    </div>
+</div>

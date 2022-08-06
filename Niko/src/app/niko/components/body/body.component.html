@@ -1,0 +1,48 @@
+<header class="fixed-top shadow pt-2">
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md-3 col-2">
+                <img src="assets/images/logo.png" 
+                    class="img-fluid" height="50" width="50" alt="logo iTeam-$">
+            </div>
+            <div class="col-md-6 col-8 cadreSearch">
+                <form class="d-flex position-relative" role="search">
+                    <input class="form-control rounded-pill 
+                        border border-2 me-2 ps-5" type="search" 
+                        placeholder="Recherche de membres..." aria-label="Search">
+                    <span class="material-symbols-outlined iconSearch">
+                        person_search
+                    </span>
+                </form>
+            </div>
+            <div class="col-md-3 col-2 d-flex justify-content-end">
+                <button class="btn rounded-pill shadow border border-2
+                    d-flex justify-content-center align-items-center deconnection"
+                    (click)="onlogOut()">
+                    <span class="material-symbols-outlined fw-bold">
+                        power_rounded
+                    </span>
+                    <span class="ms-1 fw-bold textDeconnection">Déconnecter</span>
+                </button>
+            </div>
+        </div>
+        <div class="row rounded pt-1 mt-1 mb-1 switchButtons">
+            <div class="col-3" *ngFor="let data of navMenu">
+                <div class="btn" 
+                    [routerLink]="data.route" 
+                    routerLinkActive="active_menu"
+                    [routerLinkActiveOptions]="{exact: true}">
+                    <span class="material-symbols-outlined">
+                        {{ data.icon }}
+                    </span>
+                    <span class="fw-bold
+                        menu_label">{{ data.label | titlecase }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="m-md-3 m-2 p-5"></div>
+<section class="">
+    <router-outlet></router-outlet>
+</section>

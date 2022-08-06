@@ -1,0 +1,81 @@
+.logIn {
+    position: relative;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding-top: 5%;
+    z-index: 1;  
+}
+
+label {
+    color: #008080;
+}
+
+.salutation {
+    text-shadow: 3px 3px 10px #008080;
+    color: rgba(15, 26, 58, 0.938);
+    background-color: rgba($color: #008080, $alpha: .7);
+    img {
+        text-shadow: 3px 3px 10px #008080;
+    }
+}
+
+.buttonSubmit {
+    background-color: rgba($color: #008080, $alpha: .9);
+    color: white;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    transition: all .5s;
+    span {
+        display: none;
+    }
+    &:hover {
+        border: 1px solid rgba($color: #008080, $alpha: .75);
+        color: rgba(15, 26, 58, 0.938);
+        background-color: rgba($color: #008080, $alpha: .8);
+        span {
+            display: block;
+        }
+    }
+}
+
+.cadreFormulaire {
+    border-radius: 3%;
+    border: 1px solid rgba($color: #e6e4e4, $alpha: 1.0);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    background-color: #ffffff !important;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 767px) {
+   .img_logIn {
+        height: 37vh !important;
+        width: 37vh !important;
+   }
+
+   .logIn {
+    margin-top: 2% !important;
+   }
+   
+   .logIn::before {
+    top: -11px !important;
+   }
+}
+
+.logIn::before {
+    content: '';
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    background: linear-gradient(to top, 
+    rgba($color: #008080, $alpha: .6) 20%, 
+    rgba($color: #008080, $alpha: .4) 80%);
+    z-index: -1;
+}
+
+.sous_titre, .icone {
+    color: rgba(15, 26, 58, 0.76);
+}
