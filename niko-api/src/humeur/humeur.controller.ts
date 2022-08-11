@@ -1,4 +1,5 @@
-import { Body, Controller, NotAcceptableException, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, NotAcceptableException, Post, 
+    Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { HumeurCreateDto } from './dto';
