@@ -1,1 +1,38 @@
-<p>groupe works!</p>
+<div class="container" style="background-color: white;">
+    <div class="row p-1">
+        <div class="col-12 mt-3 d-flex 
+            justify-content-center">
+            <span class="fs-4 fw-bold titre_param">
+               Mes groupes:
+            </span>
+        </div>
+        <div class="col-12 mt-3 group_list">
+            <ul class="list-group container-fluid" 
+                style="padding: 0;" *ngIf="listGroup">
+                <li class="list-group-item list-group-item-action
+                    row my-1 mx-0 border rounded
+                    d-flex justify-content-between" 
+                    *ngFor="let data of listGroup">
+                    <div class="col-4 d-flex flex-column 
+                        align-items-start">
+                        <span class="material-symbols-outlined">
+                            group
+                        </span>
+                        <span class="ms-1 fw-bold" 
+                            style="color: #008080;">{{ data.nom_groupe | titlecase }}</span>
+                    </div>
+                    <div class="col-4 d-flex flex-column 
+                        justify-content-center align-items-center">
+                        <span class="material-symbols-outlined" 
+                            style="color: rgba(15, 26, 58, 0.767)">
+                            calendar_month
+                        </span>
+                        <span 
+                            style="color: rgba(15, 26, 58, 0.623) !important;">
+                            {{ data.created_at | date: 'dd-MM-y à HH:mm:ss' }}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

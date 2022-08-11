@@ -7,13 +7,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 import { CreateGroupeComponent } from './components/create-groupe/create-groupe.component';
 import { GroupeComponent } from './components/groupe/groupe.component';
+import { GroupeCreatedComponent } from './components/groupe-created/groupe-created.component';
 
 @NgModule({
   declarations: [
     BodyComponent,
     HomeComponent,
     CreateGroupeComponent,
-    GroupeComponent
+    GroupeComponent,
+    GroupeCreatedComponent
   ],
   imports: [
     CommonModule,

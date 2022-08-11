@@ -52,4 +52,10 @@ export class NikoService {
     getAllMembre(): Observable<ModelAllMembre[]> {
         return this.http.get<ModelAllMembre[]>(environment.baseUrl + '/membre');
     }
+
+    // ========================== MES GROUPES =====================================
+    getMyListGroup(): Observable<ModelGroupLists[]> {
+        return this.http.get<ModelGroupLists[]>(environment.baseUrl + 
+            '/appartenance/membre-groupe');
+    }
 }
