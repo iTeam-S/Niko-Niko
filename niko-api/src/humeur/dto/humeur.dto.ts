@@ -7,3 +7,18 @@ export class HumeurCreateDto {
     @ApiProperty()
     groupe_id!: number;
 }
+
+export class HumeurDto {
+    lundi: string;
+    mardi: any;
+    mercredi: string;
+    jeudi: any;
+    vendredi: any;
+    semaine: Date;
+    prenom_usuel: string;
+}
+
+export class HumeurResponse {
+    semaine_id: Date;
+    humeurs: HumeurDto[];
+}
