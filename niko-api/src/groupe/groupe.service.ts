@@ -52,6 +52,16 @@ export class GroupeService {
         .getRawMany();
     }
 
+    async findById(donnees: { id: number }): Promise<Groupe> {
+        return await this.groupeRepository
+        .createQueryBuilder("g")
+        .select(["g.nom as nom_groupe"])
+        .where("g.id=:groupe_id", {
+            groupe_id: donnees.id
+        })
+        .getRawOne();
+    }
+
     async update(donnees: GroupeUpdateDto): Promise<void> {
         await this.groupeRepository
         .createQueryBuilder()
