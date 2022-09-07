@@ -26,10 +26,10 @@ export class HumeurController {
         return await this.humeurService.findBymembre(parseInt(req.user.id), donnees);
     }
 
-    @UseGuards(AuthGuard(('jwtNiko')))
+    @UseGuards(AuthGuard('jwtNiko'))
     @Get('groupe/:id')
-    async getByGroupe(@Param()donnees: { id: number }) {
+    async getByGroupe(@Param() donnees: { id: number }, @Request() req: any) {
         if(!donnees) throw new NotAcceptableException("Credentials incorrects !");
-        return await this.humeurService.findByGroupe(donnees);
+        return await this.humeurService.findByGroupe(parseInt(req.user.id), donnees);
     }
 }

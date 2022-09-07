@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Humeur, Membre } from 'src/output';
+import { Groupe, Humeur, Membre } from 'src/output';
 import { Repository } from 'typeorm';
 import { HumeurCreateDto, HumeurDto, HumeurResponse } from './dto';
 
@@ -8,17 +8,18 @@ import { HumeurCreateDto, HumeurDto, HumeurResponse } from './dto';
 export class HumeurService {
     constructor(
         @InjectRepository(Humeur)
-        private humeurRepository: Repository<Humeur>
+        private humeurRepository: Repository<Humeur>,
+        @InjectRepository(Groupe)
+        private groupeRepository: Repository<Groupe>
     ) {}
 
     private async verifyHumeur(membre_id: number, donnees: HumeurCreateDto): Promise<Humeur> {
         return await this.humeurRepository
         .createQueryBuilder("h")
         .select(["h.id"])
-        .where(` DATE(h.created_at)=:today
+        .where(` DATE(h.posted_at)=CURDATE()
             AND h.groupe_id=:groupe
             AND h.membre_id=:membre`, {
-                today: () => "CURDATE()",
                 groupe: donnees.groupe_id,
                 membre: membre_id
             })
@@ -27,7 +28,7 @@ export class HumeurService {
 
     async create(membre_id: number, donnees: HumeurCreateDto): Promise<void> {
         const verify = await this.verifyHumeur(membre_id, donnees);
-        if(verify) throw new ForbiddenException("Can't anymore react to day !");
+        if(verify) throw new ForbiddenException("Vous ne pouvez plus poster d'humeur aujourd'hui...!");
         await this.humeurRepository
         .createQueryBuilder()
         .insert()
@@ -101,10 +102,25 @@ export class HumeurService {
                 groupe: donnees.id
             })
         .groupBy("WEEK(posted_at)")
+        .orderBy("WEEK(posted_at)", "DESC")
         .getRawMany();
     }
 
-    async findByGroupe(donnees: {id: number }): Promise<HumeurResponse[]> {
+    private async verifyGroupeOwner(membre_id: number, 
+        donnees: { id: number }): Promise<Groupe> {
+        return await this.groupeRepository
+            .createQueryBuilder("g")
+            .select(["g.id"])
+            .where("g.id=:groupe_id AND g.membre_id=:identifiant", {
+                groupe_id: donnees.id,
+                identifiant: membre_id
+            })
+            .getRawOne();
+    }
+
+    async findByGroupe(membre_id: number, donnees: {id: number }): Promise<HumeurResponse[]> {
+        const verify = await this.verifyGroupeOwner(membre_id, donnees);
+        if(!verify) throw new ForbiddenException("Erreur de groupe...!");
         const reponses: HumeurDto[] = await this.humeurRepository
         .createQueryBuilder('h')
         .select([
@@ -149,7 +165,7 @@ export class HumeurService {
                 AND WEEKDAY(posted_at) = 4
             ) as vendredi`,
             `(
-                SELECT DATE_SUB(DATE(posted_at), INTERVAL WEEKDAY(posted_at) DAY)
+                SELECT DATE_SUB(DATE(posted_at), INTERVAL (WEEKDAY(posted_at) - 1) DAY)
                 FROM humeur
                 WHERE membre_id = h.membre_id
                 AND groupe_id = h.groupe_id
@@ -164,6 +180,7 @@ export class HumeurService {
             })
         .groupBy("WEEK(posted_at)")
         .addGroupBy("h.membre_id")
+        .orderBy("WEEK(posted_at)", "DESC")
         .getRawMany();
         
         const semaines: string[] = [];
