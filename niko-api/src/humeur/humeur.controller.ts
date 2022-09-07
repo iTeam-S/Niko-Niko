@@ -1,4 +1,5 @@
-import { Body, Controller, NotAcceptableException, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, NotAcceptableException, Param, Post, 
+    Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { HumeurCreateDto } from './dto';
@@ -16,5 +17,19 @@ export class HumeurController {
     async createHumeur(@Body() donnees: HumeurCreateDto, @Request() req: any) {
         if(!donnees) throw new NotAcceptableException("Credentials incorrects !");
         return await this.humeurService.create(parseInt(req.user.id), donnees);
+    }
+
+    @UseGuards(AuthGuard('jwtNiko'))
+    @Get('membre/:id')
+    async getByMembre(@Param() donnees: { id: number }, @Request() req: any) {
+        if(!donnees) throw new NotAcceptableException("Credentials incorrects !");
+        return await this.humeurService.findBymembre(parseInt(req.user.id), donnees);
+    }
+
+    @UseGuards(AuthGuard('jwtNiko'))
+    @Get('groupe/:id')
+    async getByGroupe(@Param() donnees: { id: number }, @Request() req: any) {
+        if(!donnees) throw new NotAcceptableException("Credentials incorrects !");
+        return await this.humeurService.findByGroupe(parseInt(req.user.id), donnees);
     }
 }

@@ -33,6 +33,12 @@ export class GroupeController {
     }
 
     @UseGuards(AuthGuard('jwtNiko'))
+    @Get(':id')
+    async getGroupeById(@Param() donnees: { id: number }) {
+        return await this.groupeService.findById(donnees);
+    }
+
+    @UseGuards(AuthGuard('jwtNiko'))
     @Patch('update')
     async updateGroupe(@Body() donnees: GroupeUpdateDto, @Request() req: any) {
         if(!donnees) throw new NotAcceptableException('Credentials incorrects !');

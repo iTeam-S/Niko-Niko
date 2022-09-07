@@ -1,0 +1,107 @@
+<div class="container">
+    <div class="row justify-content-center my-md-3 my-2">
+        <div class="col-12 col-md-5 text-center fs-3 fw-bold">{{ (groupe$ | async)?.nom_groupe }}</div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-3" *ngIf="SingleGroupe">
+        <div class="col" *ngFor="let data of SingleGroupe">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title text-center fw-bold rounded shadow" id="title_card">
+                        {{ data.semaine | date: 'dd MMMM y' }}
+                    </div>
+                    <div class="overflow-auto">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">lundi</th>
+                                    <th scope="col">mardi</th>
+                                    <th scope="col">mercredi</th>
+                                    <th scope="col">Jeudi</th>
+                                    <th scope="col">Vendredi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ data.lundi }}</td>
+                                    <td>{{ data.mardi }}</td>
+                                    <td>{{ data.mercredi }}</td>
+                                    <td>{{ data.jeudi }}</td>
+                                    <td>{{ data.vendredi }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-5 my-md-3"></div>
+    <div id="btn_ajout_humeur">
+        <button class="btn btn-link shadow 
+            d-flex justify-content-center border border-2"
+            data-bs-toggle="modal" data-bs-target="#modalforPostingMood" 
+            data-bs-whatever="@getbootstrap">
+            <span class="material-symbols-outlined">
+                add_reaction
+            </span>
+        </button>
+    </div>
+</div>
+
+<!-- ===================== MODAL FOR POSTING THE MOOD ===================== -->
+<div class="modal fade" id="modalforPostingMood" 
+    data-bs-backdrop="static" 
+    data-bs-keyboard="false" tabindex="-1" 
+    aria-labelledby="modalforPostingMoodLabel" 
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" 
+                    id="modalforPostingMoodLabel">Réagir aujourd'hui</h5>
+                <button type="button" class="btn-close" 
+                    data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-group" [formGroup]="moodForm">
+                    <div class="mt-3">
+                        <select class="form-select" formControlName="humeur_type">
+                            <option value="😊">😊</option>
+                            <option value="😁">😁</option>
+                            <option value="😌">😌</option>
+                            <option value="😠">😠</option>
+                            <option value="😡">😡</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success fw-bold"
+                    data-bs-dismiss="modal"
+                    [disabled]="moodForm.invalid"
+                    (click)="onSendMood()">réagir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================ NOTIFICATIONS ======================= -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToastNotification" class="toast" role="alert" 
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-header" 
+            [style.color]="titreToast !== 'Erreur' ? '#19873f' : '#dc3545'">
+            <strong class="me-auto d-flex align-items-center"> 
+                <span class="material-symbols-outlined">
+                    {{ iconeToast }}
+                </span>
+                <span class="ms-1">{{ titreToast }}</span>
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" 
+                aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-center" 
+            [style.color]="titreToast !== 'Erreur' ? '#19873f' : '#dc3545'">
+            {{ messageToast }}</div>
+    </div>
+</div>

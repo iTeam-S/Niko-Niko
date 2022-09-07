@@ -38,6 +38,20 @@ export class AppartenanceService {
         .getRawMany();
     }
 
+    async findByMembre(id_membre: number): Promise<Appartenance[]> {
+        return await this.appartenanceRepository
+        .createQueryBuilder("a")
+        .select([
+            "a.id as id", "g.nom as nom_groupe",
+            "g.created_at as created_at",
+            "a.groupe_id as groupe_id"
+        ])
+        .innerJoin(Groupe, "g", "g.id=a.groupe_id")
+        .innerJoin(Membre, "m", "m.id=a.membre_id")
+        .where(`a.membre_id=:identifiant`, { identifiant: id_membre })
+        .getRawMany();
+    }
+
     async remove(donnees: { id: number }): Promise<void> {
         await this.appartenanceRepository.delete(donnees.id);
     }
