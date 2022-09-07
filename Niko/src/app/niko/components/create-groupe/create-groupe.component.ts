@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormArrayName, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModelAllMembre, ModelGroupLists, ModelMembreGroup } from 'src/app/core/models/niko.model';
+import { FormArray, FormBuilder, FormControl, 
+  FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ModelAllMembre, ModelGroupLists, 
+  ModelMembreGroup } from 'src/app/core/models/niko.model';
 import { NikoService } from 'src/app/core/services/niko.service';
 declare var window: any;
 
@@ -28,7 +31,8 @@ export class CreateGroupeComponent implements OnInit {
 
   constructor(
     private nikoService: NikoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -262,5 +266,9 @@ export class CreateGroupeComponent implements OnInit {
         toast.show();
       }
     });
+  }
+
+  onViewGroupe(id: number): void {
+    this.router.navigateByUrl(`/niko/settings/group/${id}`);
   }
 }
