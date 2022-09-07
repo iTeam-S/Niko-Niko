@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModelGroupLists } from 'src/app/core/models/niko.model';
+import { Router } from '@angular/router';
+import { ModelGroupLists, ModelMyGroupe } from 'src/app/core/models/niko.model';
 import { NikoService } from 'src/app/core/services/niko.service';
 
 @Component({
@@ -8,9 +9,10 @@ import { NikoService } from 'src/app/core/services/niko.service';
   styleUrls: ['./groupe.component.scss']
 })
 export class GroupeComponent implements OnInit {
-  listGroup!: ModelGroupLists[];
+  listGroup!: ModelMyGroupe[];
   constructor(
-    private nikoService: NikoService
+    private nikoService: NikoService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -19,4 +21,7 @@ export class GroupeComponent implements OnInit {
     });
   }
 
+  onViewGroupe(groupe_id: number): void {
+    this.router.navigateByUrl(`/niko/group/${groupe_id}`);
+  }
 }
