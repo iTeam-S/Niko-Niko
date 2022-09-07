@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row justify-content-center my-md-3 my-2">
-        <div class="col-12 col-md-5 text-center fs-3 fw-bold">{{ nom_groupe.nom_groupe }}</div>
+        <div class="col-12 col-md-5 text-center fs-3 fw-bold">{{ (groupe$ | async)?.nom_groupe }}</div>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-3" *ngIf="SingleGroupe">
         <div class="col" *ngFor="let data of SingleGroupe">

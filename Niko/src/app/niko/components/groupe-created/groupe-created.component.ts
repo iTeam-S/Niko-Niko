@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ModelGroupCreated, ModelNomGroupe } from 'src/app/core/models/niko.model';
 import { NikoService } from 'src/app/core/services/niko.service';
 
@@ -10,7 +11,7 @@ import { NikoService } from 'src/app/core/services/niko.service';
 })
 export class GroupeCreatedComponent implements OnInit {
   groupe_id!: number;
-  nom_groupe!: ModelNomGroupe;
+  groupe$!: Observable<ModelNomGroupe>;
   groupeCreated!: ModelGroupCreated[];
   iconeToast!: any;
   titreToast!: string | null;
@@ -22,10 +23,7 @@ export class GroupeCreatedComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupe_id = +this.route.snapshot.params['id'];
-    this.nikoService.getNomGroupe(this.groupe_id).subscribe({
-      next: response => this.nom_groupe = response,
-      error: e => console.log(`Il y a une erreur...${ e }`)
-    });
+    this.groupe$ = this.nikoService.getNomGroupe(this.groupe_id);
     this.nikoService.getMoodGroupes(this.groupe_id).subscribe({
       next: response => this.groupeCreated = response,
       error: (response) => {

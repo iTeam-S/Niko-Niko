@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ModelCreateHumeur, ModelNomGroupe, ModelSingleGroupe } from 'src/app/core/models/niko.model';
 import { NikoService } from 'src/app/core/services/niko.service';
 declare var window: any;
@@ -12,7 +13,7 @@ declare var window: any;
 })
 export class SingleGroupeComponent implements OnInit {
   groupe_id!: number;
-  nom_groupe!: ModelNomGroupe;
+  groupe$!: Observable<ModelNomGroupe>;
   SingleGroupe!: ModelSingleGroupe[];
   moodForm!: FormGroup
   moodRegex: RegExp = /[😊😁😌😠😡]/;
@@ -27,10 +28,7 @@ export class SingleGroupeComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupe_id = +this.route.snapshot.params['id'];
-    this.nikoService.getNomGroupe(this.groupe_id).subscribe({
-      next: response => this.nom_groupe = response,
-      error: e => console.log(`Il y a une erreur...! ${e}`)
-    });
+    this.groupe$ = this.nikoService.getNomGroupe(this.groupe_id);
     this.nikoService.getSingleGroupe(this.groupe_id).subscribe({
       next: response => this.SingleGroupe = response,
       error: (e) => console.log(`Il y a une erreur...! ${e}`)
