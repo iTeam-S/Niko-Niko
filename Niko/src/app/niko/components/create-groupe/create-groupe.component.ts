@@ -230,42 +230,47 @@ export class CreateGroupeComponent implements OnInit {
   }
 
   onAddMembre(): void {
-    const donnees = {
-      groupe_id: this.currentGroupe?.id, 
-      ...this.formMembreCheckbox.value
-    };
-    let toast = new window.bootstrap
-      .Toast(document.getElementById('liveToastNotificationMembre'));
-    this.nikoService.createMembreGroupe(donnees).subscribe({
-      next: () => {
-        this.iconeToastMembre = "check_circle";
-        this.titreToastMembre = "Membres";
-        this.messageToastMembre = "Ajoutés avec succès !"
-        toast.show();
-        this.nikoService.getMembreGroupe(this.currentGroupe?.id).subscribe({
-          next: (response) => {
-            this.membreGroupe = response;
-            this.currentsPrenoms = this.membreGroupe
-              .map(value => value.prenom_usuel.trim());
-            this.membreCheckbox = this.membreAll.filter((membre) => !this.currentsPrenoms
-              .includes(membre.prenom_usuel));
+    if(this.formMembreCheckbox.value.membre_list.length !== 0) {
+      const donnees = {
+        groupe_id: this.currentGroupe?.id, 
+        ...this.formMembreCheckbox.value
+      };
+      let toast = new window.bootstrap
+        .Toast(document.getElementById('liveToastNotificationMembre'));
+      this.nikoService.createMembreGroupe(donnees).subscribe({
+        next: () => {
+          this.iconeToastMembre = "check_circle";
+          this.titreToastMembre = "Membres";
+          this.messageToastMembre = "Ajoutés avec succès !"
+          toast.show();
+          this.formMembreCheckbox = this.formBuilder.group({
+            membre_list: new FormArray([])
+          });
+          this.nikoService.getMembreGroupe(this.currentGroupe?.id).subscribe({
+            next: (response) => {
+              this.membreGroupe = response;
+              this.currentsPrenoms = this.membreGroupe
+                .map(value => value.prenom_usuel.trim());
+              this.membreCheckbox = this.membreAll.filter((membre) => !this.currentsPrenoms
+                .includes(membre.prenom_usuel));
+            }
+          });
+        },
+        error: (res) => {
+          if(res.status === 406) {
+            this.iconeToastMembre = "warning";
+            this.titreToastMembre = "Erreur";
+            this.messageToastMembre = "Veuillez respecter le type de données..."
           }
-        });
-      },
-      error: (res) => {
-        if(res.status === 406) {
-          this.iconeToastMembre = "warning";
-          this.titreToastMembre = "Erreur";
-          this.messageToastMembre = "Veuillez respecter le type de données..."
+          else {
+            this.iconeToastMembre = "error";
+            this.titreToastMembre = "Erreur";
+            this.messageToastMembre = res.error.message
+          }
+          toast.show();
         }
-        else {
-          this.iconeToastMembre = "error";
-          this.titreToastMembre = "Erreur";
-          this.messageToastMembre = res.error.message
-        }
-        toast.show();
-      }
-    });
+      });
+    }
   }
 
   onViewGroupe(id: number): void {
