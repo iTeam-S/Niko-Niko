@@ -1,1 +1,61 @@
-<p>groupe-created works!</p>
+<div class="container">
+    <div class="row justify-content-center my-md-3 my-2">
+        <div class="col-12 col-md-5 text-center fs-3 fw-bold">{{ nom_groupe.nom_groupe }}</div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 g-3" *ngIf="groupeCreated">
+        <div class="col" *ngFor="let data of groupeCreated">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title text-center fw-bold rounded shadow" id="title_card">
+                        {{ data.semaine_id | date: 'dd MMMM y' }}
+                    </div>
+                    <div class="overflow-auto">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="color: #008080;">Membres</th>
+                                    <th scope="col">lundi</th>
+                                    <th scope="col">mardi</th>
+                                    <th scope="col">mercredi</th>
+                                    <th scope="col">Jeudi</th>
+                                    <th scope="col">Vendredi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let humeur of data.humeurs">
+                                    <th scope="row" style="color: #008080;">{{ humeur.prenom_usuel }}</th>
+                                    <td>{{ humeur.lundi }}</td>
+                                    <td>{{ humeur.mardi }}</td>
+                                    <td>{{ humeur.mercredi }}</td>
+                                    <td>{{ humeur.jeudi }}</td>
+                                    <td>{{ humeur.vendredi }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-5 my-md-3"></div>
+</div>
+<!-- ============================ NOTIFICATIONS ======================= -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToastNotification" class="toast" role="alert" 
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-header" 
+            [style.color]="titreToast !== 'Erreur' ? '#19873f' : '#dc3545'">
+            <strong class="me-auto d-flex align-items-center"> 
+                <span class="material-symbols-outlined">
+                    {{ iconeToast }}
+                </span>
+                <span class="ms-1">{{ titreToast }}</span>
+            </strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" 
+                aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-center" 
+            [style.color]="titreToast !== 'Erreur' ? '#19873f' : '#dc3545'">
+            {{ messageToast }}</div>
+    </div>
+</div>
