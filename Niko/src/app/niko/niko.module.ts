@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { CreateGroupeComponent } from './components/create-groupe/create-groupe.component';
 import { GroupeComponent } from './components/groupe/groupe.component';
 import { GroupeCreatedComponent } from './components/groupe-created/groupe-created.component';
+import { SingleGroupeComponent } from './components/single-groupe/single-groupe.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { GroupeCreatedComponent } from './components/groupe-created/groupe-creat
     HomeComponent,
     CreateGroupeComponent,
     GroupeComponent,
-    GroupeCreatedComponent
+    GroupeCreatedComponent,
+    SingleGroupeComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,9 @@ import { GroupeCreatedComponent } from './components/groupe-created/groupe-creat
     BodyComponent,
     HomeComponent,
     CreateGroupeComponent,
-    GroupeComponent
+    GroupeComponent,
+    GroupeCreatedComponent,
+    SingleGroupeComponent
   ]
 })
 export class NikoModule { }
