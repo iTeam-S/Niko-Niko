@@ -43,7 +43,8 @@ export class AppartenanceService {
         .createQueryBuilder("a")
         .select([
             "a.id as id", "g.nom as nom_groupe",
-            "g.created_at as created_at"
+            "g.created_at as created_at",
+            "a.groupe_id as groupe_id"
         ])
         .innerJoin(Groupe, "g", "g.id=a.groupe_id")
         .innerJoin(Membre, "m", "m.id=a.membre_id")
