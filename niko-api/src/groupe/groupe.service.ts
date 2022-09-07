@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Appartenance, Groupe, Membre } from 'src/output';
+import { Appartenance, Groupe, Humeur, Membre } from 'src/output';
 import { Repository } from 'typeorm';
 import { GroupeCreateDto, GroupeUpdateDto } from './dto';
 
@@ -10,7 +10,9 @@ export class GroupeService {
         @InjectRepository(Groupe)
         private groupeRepository: Repository<Groupe>,
         @InjectRepository(Appartenance)
-        private appartenanceRepository: Repository<Appartenance>
+        private appartenanceRepository: Repository<Appartenance>,
+        @InjectRepository(Humeur)
+        private humeurRepository: Repository<Humeur>
     ) {}
 
     async create(membre_id: number, donnees: GroupeCreateDto): Promise<void> {
@@ -74,6 +76,13 @@ export class GroupeService {
     }
 
     async remove(donnees: { id: number }): Promise<void> {
+        await this.humeurRepository
+        .createQueryBuilder()
+        .delete()
+        .from(Humeur)
+        .where('groupe_id=:identifiant', 
+            { identifiant: donnees.id })
+        .execute();
         await this.appartenanceRepository
         .createQueryBuilder()
         .delete()
