@@ -5,16 +5,7 @@
         <img src="./niko_web.png" width="767" alt="Niko" />
     </a>
     <a href="https://github.com/iTeam-S/Niko-Niko/releases/tag/v1" target="blank">
-        <img src="./niko_mobile_4.jpg" width="767" alt="Niko" />
-    </a>
-    <a href="https://github.com/iTeam-S/Niko-Niko/releases/tag/v1" target="blank">
-        <img src="./niko_mobile_3.jpg" width="767" alt="Niko" />
-    </a>
-    <a href="https://github.com/iTeam-S/Niko-Niko/releases/tag/v1" target="blank">
-        <img src="./niko_mobile_2.jpg" width="767" alt="Niko" />
-    </a>
-    <a href="https://niko.iteam-s.mg" target="blank">
-        <img src="./niko_web_2.png" width="767" alt="Niko" />
+        <img src="./niko_mobile_4.jpg" width="221" alt="Niko" />
     </a>
 </p>
 
@@ -36,22 +27,21 @@
     - [NESTJS](https://nestjs.com/): Framework nodejs écrit en Typescript, pour la création d'une application coté serveur.
   - En gros, l'application est en full-Typescript...
 <p align="center">
-  <a href="https://nestjs.com/" target="blank">
-    <img src="https://nestjs.com/img/logo-small.svg" width="100" alt="Nest Logo" />
-  </a>
-  <a href="https://angular.io/" target="blank">
-    <img src="https://angular.io/assets/images/logos/angular/angular.svg" 
-       width="100" alt="Angular Logo" />
-  </a>
+    <a href="https://angular.io/" target="blank">
+        <img src="https://angular.io/assets/images/logos/angular/angular.svg" 
+           width="100" alt="Angular Logo" />
+      </a>
+      <a href="https://nestjs.com/" target="blank">
+        <img src="https://nestjs.com/img/logo-small.svg" width="100" alt="Nest Logo" />
+      </a>
 </p>
 
 - [ ] **iTeam-$ community:**
+    - Merci iTeam-$ 🤓
     - © 2022 Copyright: [iTeam-$](https://www.iteam-s.mg/)
 
 <p align="center">
   <a href="https://niko.iteam-s.mg" target="blank">
-    <img src="./niko_mobile_1.jpg" width="100" alt="Niko" />
+    <img src="./niko_mobile_1.jpg" width="331" alt="Niko" />
   </a>
 </p>
-
-Thanks, iTeam-$ community 
