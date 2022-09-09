@@ -2,7 +2,7 @@
 
 <p align="center">
     <a href="https://niko.iteam-s.mg" target="blank">
-        <img src="./niko_web.png" width="531" alt="Niko" />
+        <img src="./niko_web.png" width="767" alt="Niko" />
     </a>
     <a href="https://github.com/iTeam-S/Niko-Niko/releases/tag/v1" target="blank">
         <img src="./niko_mobile_4.jpg" width="221" alt="Niko" />
