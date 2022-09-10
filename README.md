@@ -2,14 +2,11 @@
 
 <p align="center">
     <a href="https://niko.iteam-s.mg" target="blank">
-        <img src="./niko_web.png" width="767" alt="Niko" />
-    </a>
-    <a href="https://github.com/iTeam-S/Niko-Niko/releases/tag/v1" target="blank">
-        <img src="./niko_mobile_4.jpg" width="221" alt="Niko" />
+        <img src="./niko_web.png" width="600" alt="Niko" />
     </a>
 </p>
 
-- [ ] **Description:**
+###  **Description:**
   - Niko-Niko est une application multi-plateforme créée par iTeam-$:
     - [web](https://niko.iteam-s.mg)
     - [mobile](https://github.com/iTeam-S/Niko-Niko/releases/tag/v1)
@@ -21,7 +18,7 @@
   - L'humeur de chacun sera reflète par cinq émojis qui décrive son 
     état durant la journée du projet (très heureux, heureux, ..., en colère).
 
-- [ ] **Technologies utilisées:**
+### **Technologies utilisées:**
   - Les technologies que nous avons utilisées:
     - [ANGULAR](https://angular.io/): Framework front-end écrit en Typescript maintenue par Google, pour créer une application(coté client).
     - [NESTJS](https://nestjs.com/): Framework nodejs écrit en Typescript, pour la création d'une application coté serveur.
@@ -36,7 +33,7 @@
       </a>
 </p>
 
-- [ ] **iTeam-$ community:**
+### **iTeam-$ community:**
     - Merci iTeam-$ 🤓
     - © 2022 Copyright: [iTeam-$](https://www.iteam-s.mg/)
 
