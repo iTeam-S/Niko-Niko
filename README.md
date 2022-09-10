@@ -2,7 +2,7 @@
 
 <p align="center">
     <a href="https://niko.iteam-s.mg" target="blank">
-        <img src="./niko_web.png" width="600" alt="Niko" />
+        <img src="./data/niko_web.png" width="600" alt="Niko" />
     </a>
 </p>
 
@@ -34,11 +34,12 @@
 </p>
 
 ### **iTeam-$ community:**
-    - Merci iTeam-$ 🤓
-    - © 2022 Copyright: [iTeam-$](https://www.iteam-s.mg/)
+
+  - Merci iTeam-$ 🤓
+  - © 2022 Copyright: [iTeam-$](https://www.iteam-s.mg/)
 
 <p align="center">
   <a href="https://niko.iteam-s.mg" target="blank">
-    <img src="./niko_mobile_1.jpg" width="331" alt="Niko" />
+    <img src="./data//niko_mobile_1.jpg" width="331" alt="Niko" />
   </a>
 </p>
